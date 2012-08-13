@@ -25,7 +25,7 @@
       <file leaf-file-name="bootstrap.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/bootstrap.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="0" selection-start="959" selection-end="959" vertical-scroll-proportion="0.2714724">
+            <state line="31" column="36" selection-start="823" selection-end="823" vertical-scroll-proportion="0.32055214">
               <folding />
             </state>
           </provider>
@@ -43,7 +43,7 @@
       <file leaf-file-name="UrlResolve.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/framework/Routers/UrlResolve.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="18" selection-start="270" selection-end="270" vertical-scroll-proportion="-12.16">
+            <state line="7" column="6" selection-start="109" selection-end="119" vertical-scroll-proportion="-5.32">
               <folding />
             </state>
           </provider>
@@ -291,14 +291,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/framework/Routers/UrlResolve.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="18" selection-start="270" selection-end="270" vertical-scroll-proportion="-12.16">
+        <state line="7" column="6" selection-start="109" selection-end="119" vertical-scroll-proportion="-5.32">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/bootstrap.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="959" selection-end="959" vertical-scroll-proportion="0.2714724">
+        <state line="31" column="36" selection-start="823" selection-end="823" vertical-scroll-proportion="0.32055214">
           <folding />
         </state>
       </provider>

@@ -29,14 +29,14 @@ $configurator->addConfig(__DIR__ . '/config/config.neon');
 $container = $configurator->createContainer();
 
 
-\kinq\Application\Routers\FilterRoute::$aliases = array(
+\kinq\Application\Routers\UrlResolve::$aliases = array(
 	'Testik' => 'Page:Default:test',
 	'Nplik' => 'Page:default',
 	'Ahoj' => 'Page:default',
 	'test' => 'Page:test'
 );
 
-\kinq\Application\Routers\FilterRoute::$translations = array(
+\kinq\Application\Routers\UrlResolve::$translations = array(
 	'cs' => array(
 		'gods' => 'zbozi',
 		'category' => 'kategorie',
