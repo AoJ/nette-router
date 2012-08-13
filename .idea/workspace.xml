@@ -22,19 +22,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="bootstrap.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="bootstrap.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/bootstrap.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="46" selection-start="1255" selection-end="1255" vertical-scroll-proportion="-13.92">
+            <state line="37" column="0" selection-start="959" selection-end="959" vertical-scroll-proportion="0.2714724">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="7" selection-start="20" selection-end="20" vertical-scroll-proportion="0.056129985">
+            <state line="2" column="7" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -43,7 +43,7 @@
       <file leaf-file-name="UrlResolve.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/framework/Routers/UrlResolve.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="54" selection-start="1260" selection-end="1260" vertical-scroll-proportion="-28.36">
+            <state line="16" column="18" selection-start="270" selection-end="270" vertical-scroll-proportion="-12.16">
               <folding />
             </state>
           </provider>
@@ -64,10 +64,10 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/framework/Routers/FilterRoute.php" />
-        <option value="$PROJECT_DIR$/app/framework/Routers/UrlResolve.php" />
-        <option value="$PROJECT_DIR$/app/bootstrap.php" />
         <option value="$PROJECT_DIR$/www/.gitignore" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/framework/Routers/UrlResolve.php" />
+        <option value="$PROJECT_DIR$/app/bootstrap.php" />
       </list>
     </option>
   </component>
@@ -282,23 +282,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="7" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/framework/Routers/UrlResolve.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="54" selection-start="1260" selection-end="1260" vertical-scroll-proportion="-28.36">
+        <state line="16" column="18" selection-start="270" selection-end="270" vertical-scroll-proportion="-12.16">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/bootstrap.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="46" selection-start="1255" selection-end="1255" vertical-scroll-proportion="-13.92">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="7" selection-start="20" selection-end="20" vertical-scroll-proportion="0.056129985">
+        <state line="37" column="0" selection-start="959" selection-end="959" vertical-scroll-proportion="0.2714724">
           <folding />
         </state>
       </provider>

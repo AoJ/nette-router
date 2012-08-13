@@ -1,59 +1,71 @@
 <?php
 namespace kinq\Appication\Routers;
-use 	Nette\Object
-,		Nette
-, 		Nette\Application\Request
-,		kinq
-;
 
-class UrlResolve extends Object {
+use Nette\Object;
+use Nette;
+use Nette\Application\Request;
 
-	protected static $defaultLang = 'cs';
+class UrlResolve extends Object
+{
 
-	public static $translations = array(
-		'cs' => array(
-			'gods' => 'zbozi',
-			'category' => 'kategorie',
-			'test' => 'kontakt',
-			'Kamaradi' => 'Aoj'
-		),
-		'en' => array(
-			'gods' => 'gods',
-			'test' => 'contanct',
-			'Friends' => 'Aoj'
-		),
-	);
+	/** @var string */
+	public static $defaultLang = 'cs';
 
-	public static $aliases = array(
-            'Testik' => 'Page:Default:test',
-			'Nplik' => 'Page:default',
-			'Ahoj' => 'Page:default',
-			'test' => 'Page:test'
-        );
+	/** @var array */
+	public static $translations = array();
+
+	/** @var array */
+	public static $aliases = array();
 
 
-	public static function presenterToUrl($presenter, Request $request) {
+	/**
+	 * vygeneruje z presenteru segment url
+	 * @static
+	 * @param $presenter
+	 * @param \Nette\Application\Request $request
+	 * @return string
+	 */
+	public static function presenterToUrl($presenter, Request $request)
+	{
 		$lang = isset($request->parameters['lang']) ? $request->parameters['lang'] : self::$defaultLang;
 		$presenter = self::presenterToAlias($presenter);
 
-		if (!isset(self::$translations[$lang])) return $presenter;
-		$table = array_flip(self::$translations[$lang]);
-		return isset($table[$presenter]) ? $table[$presenter] : $presenter;
+		return isset(self::$translations[$lang][$presenter]) ? self::$translations[$lang][$presenter] : $presenter;
 	}
 
-	public static function urlToPresenter($url, Request $request) {
+
+	/**
+	 * Převede segment z url na presenter
+	 * nejprve se ho pokusí přeložit, poté najít v aliasech
+	 * @static
+	 * @param string $url
+	 * @param \Nette\Application\Request $request
+	 * @return string
+	 */
+	public static function urlToPresenter($url, Request $request)
+	{
+		$url = strtolower($url);
+		$lang = isset($request->parameters['lang']) ? $request->parameters['lang'] : self::$defaultLang;
 
 		//translate url segment
-		$lang = isset($request->parameters['lang']) ? $request->parameters['lang'] : self::$defaultLang;
-		$url = isset(self::$translations[$lang][$url]) ? self::$translations[$lang][$url] : $url;
+		$table = array_flip(isset(self::$translations[$lang]) ? self::$translations[$lang] : array());
+		$url = isset($table[$url]) ? $table[$url] : $url;
 
 		//check alias url
 		return self::aliasToPresenter($url);
 	}
 
-	public static function presenterToAlias($presenter) {
+
+	/**
+	 * převede při generování url presenter na jeho alias
+	 * @static
+	 * @param string $presenter
+	 * @return string
+	 */
+	public static function presenterToAlias($presenter)
+	{
 		$aliases = array_flip(self::$aliases);
-		if(isset($aliases[$presenter])) return $aliases[$presenter];
+		if (isset($aliases[$presenter])) return $aliases[$presenter];
 
 		//try alias only first chars
 		/*foreach ($aliases as $alias) {
@@ -63,8 +75,16 @@ class UrlResolve extends Object {
 		return $presenter;
 	}
 
-	public static function aliasToPresenter($urlAlias) {
-		if(isset(self::$aliases[$urlAlias])) return self::$aliases[$urlAlias];
+
+	/**
+	 * převede segment z url na jeho alias
+	 * @static
+	 * @param $urlAlias
+	 * @return mixed
+	 */
+	public static function aliasToPresenter($urlAlias)
+	{
+		if (isset(self::$aliases[$urlAlias])) return self::$aliases[$urlAlias];
 
 		/*foreach (self::$aliases as $alias) {
 			if (($find = substr_replace($urlAlias, $alias, 0, strlen($alias))) !== $urlAlias)

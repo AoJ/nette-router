@@ -20,17 +20,38 @@ $configurator->enableDebugger(__DIR__ . '/../log');
 // Enable RobotLoader - this will load all classes automatically
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 $configurator->createRobotLoader()
-	->addDirectory(APP_DIR)
-	->addDirectory(LIBS_DIR)
-	->register();
+		->addDirectory(APP_DIR)
+		->addDirectory(LIBS_DIR)
+		->register();
 
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(__DIR__ . '/config/config.neon');
 $container = $configurator->createContainer();
 
 
+\kinq\Application\Routers\FilterRoute::$aliases = array(
+	'Testik' => 'Page:Default:test',
+	'Nplik' => 'Page:default',
+	'Ahoj' => 'Page:default',
+	'test' => 'Page:test'
+);
 
-$smartRouter = function($mask, $metadata) {
+\kinq\Application\Routers\FilterRoute::$translations = array(
+	'cs' => array(
+		'gods' => 'zbozi',
+		'category' => 'kategorie',
+		'test' => 'kontakt',
+		'Kamaradi' => 'Aoj'
+	),
+	'en' => array(
+		'gods' => 'gods',
+		'test' => 'contanct',
+		'Friends' => 'Aoj'
+	),
+);
+
+$smartRouter = function($mask, $metadata)
+{
 	$new_route = new kinq\Application\Routers\FilterRoute($mask, $metadata);
 	foreach ($metadata as $part => $value)
 	{
@@ -44,9 +65,6 @@ $smartRouter = function($mask, $metadata) {
 	}
 	return $new_route;
 };
-
-
-
 
 
 // Setup router
