@@ -29,14 +29,8 @@ $configurator->addConfig(__DIR__ . '/config/config.neon');
 $container = $configurator->createContainer();
 
 
-\kinq\Application\Routers\UrlResolve::$aliases = array(
-	'Testik' => 'Page:Default:test',
-	'Nplik' => 'Page:default',
-	'Ahoj' => 'Page:default',
-	'test' => 'Page:test'
-);
 
-\kinq\Application\Routers\UrlResolve::$translations = array(
+\kinq\Appication\Routers\UrlResolve::$translations = array(
 	'cs' => array(
 		'gods' => 'zbozi',
 		'category' => 'kategorie',
@@ -48,6 +42,14 @@ $container = $configurator->createContainer();
 		'test' => 'contanct',
 		'Friends' => 'Aoj'
 	),
+);
+
+
+\kinq\Appication\Routers\UrlResolve::$aliases = array(
+	'Testik' => 'Page:Default:test',
+	'Nplik' => 'Page:default',
+	'Ahoj' => 'Page:default',
+	'test' => 'Page:wau'
 );
 
 $smartRouter = function($mask, $metadata)
