@@ -39,12 +39,16 @@ $container = $configurator->createContainer();
 
 // Setup router
 //ALIAS řiká, která segment to má překládat...
-$container->router[] = new SmartRoute('<presenter>', array(
-	'presenter' => array(SmartRoute::ALIAS)
+$container->router[] = new SmartRoute('<presenter .+>', array(
+	'presenter' => array(
+		SmartRoute::ALIAS,
+		Route::VALUE => NULL,
+		Route::FILTER_IN => NULL,
+		Route::FILTER_OUT => NULL)
 ));
 
-$container->router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
-$container->router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+//$container->router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
+//$container->router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 
 
 // Configure and run the application!

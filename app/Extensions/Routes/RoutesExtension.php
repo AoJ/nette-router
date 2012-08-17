@@ -24,15 +24,33 @@ class RoutesExtension extends \Nette\Config\CompilerExtension
 			)
 		);
 
-		UrlResolve::$aliases = (array)$config['aliases'];
-		UrlResolve::$translations = (array)$config['translations'];
-		UrlResolve::$defaultLang = $config['defaultLang'];
-
 		//create empty instance for storing static variables
-		$builder->addDefinition('routesExtension.urlResolver')
-			->setClass('Extensions\Routes\UrlResolve')
-			->setAutowired(true);
+		$builder->addDefinition('urlResolve')
+				->setClass('Extensions\Routes\UrlResolve')
+				->setFactory('\Extensions\Routes\RoutesExtension::UrlResolveFactory',
+			array($config['aliases'], $config['translations'], $config['defaultLang']))
+				->setAutowired(true);
 
+		$builder->getServiceName('urlResolve');
+	}
+
+
+	/**
+	 * @static
+	 * @param array $aliases
+	 * @param array $translations
+	 * @param array $defaultLang
+	 * @return UrlResolve
+	 */
+	static function UrlResolveFactory($aliases, $translations, $defaultLang)
+	{
+		$urlResolve = new UrlResolve();
+
+		$urlResolve::$aliases = (array)$aliases;
+		$urlResolve::$translations = (array)$translations;
+		$urlResolve::$defaultLang = (string)$defaultLang;
+
+		return $urlResolve;
 	}
 
 }

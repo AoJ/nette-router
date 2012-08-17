@@ -5,7 +5,7 @@ routes:
 	aliases:
 		testik: Page:Default:test
 		nplik: Page:default
-		ahoj: Page:default
+		ahoj: Sign:in
 		test: Page:wau
 
 	translations:

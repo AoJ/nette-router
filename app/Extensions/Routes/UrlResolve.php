@@ -84,7 +84,12 @@ class UrlResolve extends Object
 	 */
 	public static function aliasToLink($urlAlias)
 	{
-		return isset(self::$aliases[strtolower($urlAlias)]) ? self::$aliases[strtolower($urlAlias)] : $urlAlias;
+		$lower = strtolower($urlAlias);
+		foreach (self::$aliases as $trans => &$transLink)
+		{
+			if ($trans == $lower) return $transLink;
+		}
+		return $urlAlias;
 	}
 
 
