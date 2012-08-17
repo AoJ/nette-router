@@ -1,0 +1,17 @@
+
+routes:
+	defaultLang: cs
+
+	aliases:
+		testik: Page:Default:test
+		nplik: Page:default
+		ahoj: Page:default
+		test: Page:wau
+
+	translations:
+		cs:
+#			url: translate
+			zbozi: gods
+			kategorie: category
+			kontakt: test
+			aoj: Kamaradi

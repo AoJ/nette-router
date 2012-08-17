@@ -1,31 +1,54 @@
 <?php
 
-namespace kinq\Application\Routers;
+namespace Extensions\Routes;
 use Nette
 ,	Nette\Application\Request
 ,   Nette\Application\Routers\Route
 ,	Nette\Application\IRouter
 ,   Nette\Http\IRequest
 ,   Nette\Http\Url
-,	kinq;
+,   Nette\InvalidStateException;
+;
 
 
 
-
-class FilterRoute extends Nette\Application\Routers\Route implements IRouter
+class SmartRoute extends Route implements IRouter
 {
 	const WAY_IN = 'in';
 	const WAY_OUT = 'out';
+
+	const ALIAS = 'alias';
 
 	/** @var array */
 	private $filters = array();
 
 
+	/**
+	 * @param string $mask
+	 * @param array $metadata
+	 * @param int $flags
+	 */
+	public function __construct($mask, $metadata = array(), $flags = 0)
+	{
+
+		parent::__construct($mask, $metadata, $flags);
+
+		foreach ($metadata as $part => &$value)
+		{
+			if (is_array($value) && in_array(self::ALIAS, $value))
+			{
+				$this->addFilter($part,
+					'Extensions\Routes\UrlResolve::urlToLink',
+					'Extensions\Routes\UrlResolve::linkToUrl'
+				);
+			}
+		}
+	}
 
 	/**
-	 * Maps HTTP request to a Request object.
-	 * @param  Nette\Http\IRequest
+	 * @param \Nette\Http\IRequest $httpRequest
 	 * @return Request|NULL
+	 * Maps HTTP request to a Request object.
 	 */
 	public function match(IRequest $httpRequest)  {
 		$appRequest = parent::match($httpRequest);
@@ -41,12 +64,11 @@ class FilterRoute extends Nette\Application\Routers\Route implements IRouter
 	}
 
 
-
 	/**
 	 * Constructs absolute URL from Request object.
-	 * @param  Request
-	 * @param  Nette\Http\Url referential URI
-	 * @return string|NULL
+	 * @param \Nette\Application\Request $appRequest
+	 * @param \Nette\Http\Url $refUrl
+	 * @return NULL|string
 	 */
 	public function constructUrl(Request $appRequest, Nette\Http\Url $refUrl) {
 		if ($params = $this->doFilterParams($this->getRequestParams($appRequest), $appRequest, self::WAY_OUT)) {
@@ -63,7 +85,7 @@ class FilterRoute extends Nette\Application\Routers\Route implements IRouter
 	 * @param string $param
 	 * @param callable $in
 	 * @param callable $out
-	 * @return SmarterRoute
+	 * @return SmartRoute
 	 */
 	public function addFilter($param, $in, $out = NULL)
 	{
@@ -86,9 +108,8 @@ class FilterRoute extends Nette\Application\Routers\Route implements IRouter
 	}
 
 
-
 	/**
-	 * @param Nette\Application\PresenterRequest $appRequest
+	 * @param \Nette\Application\Request $appRequest
 	 * @return array
 	 */
 	private function getRequestParams(Request $appRequest)
@@ -119,22 +140,22 @@ class FilterRoute extends Nette\Application\Routers\Route implements IRouter
 	}
 
 
-
 	/**
-	 * @param Nette\Application\PresenterRequest $appRequest
+	 * @param \Nette\Application\Request $appRequest
 	 * @param array $params
-	 * @return Nette\Application\PresenterRequest
+	 * @return \Nette\Application\Request
+	 * @throws InvalidStateException
 	 */
 	private function setRequestParams(Request $appRequest, array $params)
 	{
 		$metadata = $this->getDefaults();
 
 		if (!isset($params[self::PRESENTER_KEY])) {
-			throw new \InvalidStateException('Missing presenter in route definition.');
+			throw new InvalidStateException('Missing presenter in route definition.');
 		}
 		if (isset($metadata[self::MODULE_KEY])) {
 			if (!isset($params[self::MODULE_KEY])) {
-				throw new \InvalidStateException('Missing module in route definition.');
+				throw new InvalidStateException('Missing module in route definition.');
 			}
 			$presenter = $params[self::MODULE_KEY] . ':' . $params[self::PRESENTER_KEY];
 			unset($params[self::MODULE_KEY], $params[self::PRESENTER_KEY]);
@@ -151,11 +172,11 @@ class FilterRoute extends Nette\Application\Routers\Route implements IRouter
 	}
 
 
-
 	/**
-	 * @param array $params
-	 * @param Nette\Application\PresenterRequest $request
+	 * @param array|\stdClass $params
+	 * @param \Nette\Application\Request $request
 	 * @param string $way
+	 * @return array|null
 	 */
 	private function doFilterParams($params, Request $request, $way)
 	{

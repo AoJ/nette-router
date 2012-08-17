@@ -4,10 +4,12 @@
  * My Application bootstrap file.
  */
 use Nette\Application\Routers\Route;
+use Extensions\Routes\SmartRoute;
 
 
 // Load Nette Framework
 require LIBS_DIR . '/Nette/loader.php';
+require __DIR__ . '/shortcuts.php';
 
 
 // Configure application
@@ -26,54 +28,21 @@ $configurator->createRobotLoader()
 
 // Create Dependency Injection container from config.neon file
 $configurator->addConfig(__DIR__ . '/config/config.neon');
-$container = $configurator->createContainer();
 
-
-
-\kinq\Appication\Routers\UrlResolve::$translations = array(
-	'cs' => array(
-		'gods' => 'zbozi',
-		'category' => 'kategorie',
-		'test' => 'kontakt',
-		'Kamaradi' => 'Aoj'
-	),
-	'en' => array(
-		'gods' => 'gods',
-		'test' => 'contanct',
-		'Friends' => 'Aoj'
-	),
-);
-
-
-\kinq\Appication\Routers\UrlResolve::$aliases = array(
-	'Testik' => 'Page:Default:test',
-	'Nplik' => 'Page:default',
-	'Ahoj' => 'Page:default',
-	'test' => 'Page:wau'
-);
-
-$smartRouter = function($mask, $metadata)
-{
-	$new_route = new kinq\Application\Routers\FilterRoute($mask, $metadata);
-	foreach ($metadata as $part => $value)
-	{
-		if (is_array($value) && in_array('TRANS', $value))
-		{
-			$new_route->addFilter($part,
-				'\kinq\Appication\Routers\UrlResolve::urlToPresenter',
-				'\kinq\Appication\Routers\UrlResolve::presenterToUrl'
-			);
-		}
-	}
-	return $new_route;
+$configurator->onCompile[] = function($configurator, \Nette\Config\Compiler $compiler) {
+        $compiler->addExtension('routes', new Extensions\Routes\RoutesExtension);
 };
 
 
+$container = $configurator->createContainer();
+
+
 // Setup router
-//TRANS řiká, která segment to má překládat...
-$container->router[] = $smartRouter('<presenter>', array(
-	'presenter' => array('TRANS')
+//ALIAS řiká, která segment to má překládat...
+$container->router[] = new SmartRoute('<presenter>', array(
+	'presenter' => array(SmartRoute::ALIAS)
 ));
+
 $container->router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
 $container->router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 

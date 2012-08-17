@@ -32,6 +32,9 @@ common:
 
 	factories:
 
+	includes:
+		- routes.neon
+
 
 production < common:
 
