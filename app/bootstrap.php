@@ -36,15 +36,13 @@ $configurator->onCompile[] = function($configurator, \Nette\Config\Compiler $com
 
 $container = $configurator->createContainer();
 
-
 // Setup router
 //ALIAS řiká, která segment to má překládat...
 $container->router[] = new SmartRoute('<presenter .+>', array(
 	'presenter' => array(
 		SmartRoute::ALIAS,
-		Route::VALUE => NULL,
-		Route::FILTER_IN => NULL,
-		Route::FILTER_OUT => NULL)
+		SmartRoute::PATTERN => '.+'
+	)
 ));
 
 //$container->router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);

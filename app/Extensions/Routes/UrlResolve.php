@@ -5,6 +5,7 @@ namespace Extensions\Routes;
 use Nette\Object;
 use Nette;
 use Nette\Application\Request;
+use Nette\Utils\Strings;
 
 class UrlResolve extends Object
 {
@@ -48,7 +49,6 @@ class UrlResolve extends Object
 	 */
 	public static function urlToLink($url, Request $request)
 	{
-
 		//translate url segment
 		$url = self::translateUrl(self::getLang($request), $url);
 
@@ -87,7 +87,7 @@ class UrlResolve extends Object
 		$lower = strtolower($urlAlias);
 		foreach (self::$aliases as $trans => &$transLink)
 		{
-			if ($trans == $lower) return $transLink;
+			if (strtolower($trans) == $lower) return $transLink;
 		}
 		return $urlAlias;
 	}

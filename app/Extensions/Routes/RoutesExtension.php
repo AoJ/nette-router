@@ -14,10 +14,11 @@ class RoutesExtension extends \Nette\Config\CompilerExtension
 	public $defaults = array();
 
 
-	public function loadConfiguration()
+	public function loadConfiguration ()
 	{
 		$builder = $this->getContainerBuilder();
-		$config = $this->getConfig(array(
+		$config = $this->getConfig(
+			array(
 				'aliases' => array(),
 				'translations' => array(),
 				'defaultLang' => ''
@@ -27,11 +28,12 @@ class RoutesExtension extends \Nette\Config\CompilerExtension
 		//create empty instance for storing static variables
 		$builder->addDefinition('urlResolve')
 				->setClass('Extensions\Routes\UrlResolve')
-				->setFactory('\Extensions\Routes\RoutesExtension::UrlResolveFactory',
-			array($config['aliases'], $config['translations'], $config['defaultLang']))
-				->setAutowired(true);
-
-		$builder->getServiceName('urlResolve');
+				->setFactory(
+			'\Extensions\Routes\RoutesExtension::UrlResolveFactory',
+			array($config['aliases'], $config['translations'], $config['defaultLang'])
+		)
+				->setAutowired(true)
+				->addTag('run');
 	}
 
 
@@ -42,7 +44,7 @@ class RoutesExtension extends \Nette\Config\CompilerExtension
 	 * @param array $defaultLang
 	 * @return UrlResolve
 	 */
-	static function UrlResolveFactory($aliases, $translations, $defaultLang)
+	static function UrlResolveFactory ($aliases, $translations, $defaultLang)
 	{
 		$urlResolve = new UrlResolve();
 
